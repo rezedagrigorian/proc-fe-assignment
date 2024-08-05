@@ -1,4 +1,4 @@
-# t
+# Procademy FE Assignment
 
 ## Project setup
 ```
