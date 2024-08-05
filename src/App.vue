@@ -1,4 +1,12 @@
 <template>
+  <p>
+    <strong>Current route path:</strong> {{ $route.fullPath }}
+  </p>
+  <nav>
+    <RouterLink to="/">Home</RouterLink>
+    <br />
+    <RouterLink to="/training_profile/12">Profile</RouterLink>
+  </nav>
   <RouterView />
 </template>
 
