@@ -1,6 +1,15 @@
 <template>
-  <h1>
-    Detailed profile view!
-    {{ $route.params.id }}
-  </h1>
+  <MainMenu />
+  Detailed profile view!
+  {{ $route.params.id }}
 </template>
+
+<script>
+import MainMenu from "@/components/MainMenu.vue";
+
+export default {
+  components: {
+    MainMenu,
+  },
+};
+</script>

@@ -12,18 +12,18 @@
 </template>
 
 <script>
-export default {
-  name: "AvatarIcon",
-  props: {
-    url: {
-      type: String,
-      required: false,
-      default: "",
+  export default {
+    name: "AvatarIcon",
+    props: {
+      url: {
+        type: String,
+        required: false,
+        default: "",
+      },
+      initials: {
+        type: String,
+        required: true,
+      },
     },
-    initials: {
-      type: String,
-      required: true,
-    },
-  },
-};
+  };
 </script>
