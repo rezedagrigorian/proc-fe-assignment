@@ -1,5 +1,5 @@
 <template>
-  <nav class="bg-white border-b border-slate-200">
+  <nav class="bg-white border-b border-slate-200 mt-12">
     <div class="mx-auto px-2 sm:px-6 lg:px-4">
       <div class="flex justify-between items-center h-16">
         <div class="flex items-center">
@@ -26,18 +26,18 @@
   export default {
     components: {
       AvatarIcon,
-    },
+    }
   };
 </script>
 
 <style scoped>
   .notification-marker::after {
     position: absolute;
+    background-color: theme(colors.rose.500);
     top: -2px;
     right: -4px;
     width: 6px;
     height: 6px;
-    background: #F43F5E;
     border-radius: 50%;
     content: ' ';
   }
