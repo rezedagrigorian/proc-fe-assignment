@@ -5,7 +5,7 @@
     <div class="lovely-grid">
       <GridComponent
         ref='grid'
-        :dataSource='rawGridData'
+        :dataSource='gridData'
         :allowFiltering='true'
       >
         <ColumnsDirective>
@@ -47,12 +47,9 @@
         </template>
 
         <template #statusFilterTemplate>
-          <MagicToggle
-            v-model="filterValue"
-          />
+          <MagicToggle v-model="achievedFilterValue" :options="achievedFilterOptions" />
         </template>
       </GridComponent>
-      {{ filterValue }}
     </div>
   </div>
 </template>
@@ -85,9 +82,13 @@ export default {
       breadcrumbs: [
         { text: 'Home', link: '/' },
       ],
-      rawGridData: [],
-      filteredData: [],
-      filterValue: ''
+      gridData: [],
+      achievedFilterValue: null,
+      achievedFilterOptions: [
+        { title: 'Yes', value: true },
+        { title: 'No', value: false },
+        { title: 'Clear', value: null }
+      ]
     }
   },
   methods: {
@@ -101,18 +102,17 @@ export default {
   },
   mounted() {
     let API_URL = "https://proc-front-dev-task.wiremockapi.cloud/training_profiles";
-    this.rawGridData = new DataManager({
+    this.gridData = new DataManager({
       url: API_URL,
       adaptor: new ODataAdaptor(),
       crossDomain: true
     })
-
     this.gridInstance = this.$refs.grid.ej2Instances;
   },
   watch: {
-    filterValue:function(val) {
-      if (val) {
-        this.$refs.grid.ej2Instances.filterByColumn('achieved', 'equal', true);
+    achievedFilterValue:function(val) {
+      if (val !== null) {
+        this.$refs.grid.ej2Instances.filterByColumn('achieved', 'equal', val);
       } else {
         this.$refs.grid.ej2Instances.clearFiltering();
       }
