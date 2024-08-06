@@ -8,25 +8,25 @@
     >
       <div class="lovely-grid">
         <GridComponent
-          ref='grid'
-          :dataSource='gridData'
-          :allowFiltering='true'
+          ref="grid"
+          :dataSource="gridData"
+          :allowFiltering="true"
         >
           <ColumnsDirective>
             <ColumnDirective
-              field='id'
+              field="id"
               :headerTemplate="'headerTemplate'"
               textAlign="Right"
               width="100"
-              :allowFiltering='false'
+              :allowFiltering="false"
             />
             <ColumnDirective
-              field='title'
+              field="title"
               :headerTemplate="'headerTemplate'"
-              :allowFiltering='false'
+              :allowFiltering="false"
             />
             <ColumnDirective
-              field='achieved'
+              field="achieved"
               :headerTemplate="'headerTemplate'"
               :template="'achievementTemplate'"
               :filterTemplate="'statusFilterTemplate'"
@@ -41,7 +41,7 @@
 
           <template v-slot:achievementTemplate="{ data }">
             <span :class="achievementClass(data.achieved)">
-              {{ data.achieved ? 'Achieved' : 'Failed' }}
+              {{ data.achieved ? "Achieved" : "Failed" }}
             </span>
           </template>
 
@@ -76,13 +76,13 @@ import {
   ColumnsDirective,
   ColumnDirective,
   Filter
-} from '@syncfusion/ej2-vue-grids';
-import { DataManager, ODataAdaptor } from "@syncfusion/ej2-data";
+} from "@syncfusion/ej2-vue-grids"
+import { DataManager, ODataAdaptor } from "@syncfusion/ej2-data"
 
-import MainMenu from "@/components/MainMenu.vue";
-import Breadcrumbs from "../components/Breadcrumbs.vue";
-import MagicToggle from '../components/MagicToggle.vue';
-import ContentBoxWrapper from '../components/ContentBoxWrapper.vue';
+import MainMenu from "@/components/MainMenu.vue"
+import Breadcrumbs from "../components/Breadcrumbs.vue"
+import MagicToggle from "../components/MagicToggle.vue"
+import ContentBoxWrapper from "../components/ContentBoxWrapper.vue"
 
 export default {
   components: {
@@ -97,45 +97,45 @@ export default {
   data() {
     return {
       breadcrumbs: [
-        { text: 'Home', link: '/' },
+        { text: "My training profiles", link: "/" },
       ],
       gridData: [],
       achievedFilterValue: null,
       achievedFilterOptions: [
-        { title: 'Yes', value: true },
-        { title: 'No', value: false },
-        { title: 'Clear', value: null }
+        { title: "Yes", value: true },
+        { title: "No", value: false },
+        { title: "Clear", value: null }
       ]
     }
   },
   methods: {
     achievementClass(isAchieved) {
-      const color = isAchieved ? 'emerald' : 'red';
-      return `p-2 rounded-full bg-${color}-50 text-${color}-700 text-xs`;
+      const color = isAchieved ? "emerald" : "red"
+      return `p-2 rounded-full bg-${color}-50 text-${color}-700 text-xs`
     }
   },
   provide: {
     grid: [Filter]
   },
   mounted() {
-    let API_URL = "https://proc-front-dev-task.wiremockapi.cloud/training_profiles";
+    let API_URL = "https://proc-front-dev-task.wiremockapi.cloud/training_profiles"
     this.gridData = new DataManager({
       url: API_URL,
       adaptor: new ODataAdaptor(),
       crossDomain: true
     })
-    this.gridInstance = this.$refs.grid.ej2Instances;
+    this.gridInstance = this.$refs.grid.ej2Instances
   },
   watch: {
     achievedFilterValue:function(val) {
       if (val !== null) {
-        this.$refs.grid.ej2Instances.filterByColumn('achieved', 'equal', val);
+        this.$refs.grid.ej2Instances.filterByColumn("achieved", "equal", val)
       } else {
-        this.$refs.grid.ej2Instances.clearFiltering();
+        this.$refs.grid.ej2Instances.clearFiltering()
       }
     }
   }
-};
+}
 </script>
 
 <style>
