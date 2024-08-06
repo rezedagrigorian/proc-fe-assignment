@@ -5,7 +5,7 @@
     <div class="lovely-grid">
       <GridComponent
         ref='grid'
-        :dataSource='filteredData'
+        :dataSource='rawGridData'
         :allowFiltering='true'
       >
         <ColumnsDirective>
@@ -64,7 +64,7 @@ import {
   ColumnDirective,
   Filter
 } from '@syncfusion/ej2-vue-grids';
-import { DataManager, ODataAdaptor, Query } from "@syncfusion/ej2-data";
+import { DataManager, ODataAdaptor } from "@syncfusion/ej2-data";
 
 // eslint-disable-next-line
 import MainMenu from "@/components/MainMenu.vue";
@@ -104,8 +104,7 @@ export default {
     this.rawGridData = new DataManager({
       url: API_URL,
       adaptor: new ODataAdaptor(),
-      crossDomain: true,
-      offline: true
+      crossDomain: true
     })
 
     this.gridInstance = this.$refs.grid.ej2Instances;
@@ -113,11 +112,9 @@ export default {
   watch: {
     filterValue:function(val) {
       if (val) {
-        const query = new Query().where('achieved', 'equal', 'Achieved');
-        console.log(query);
-        this.rawGridData.executeQuery((x) => {
-          console.log(x);
-        });
+        this.$refs.grid.ej2Instances.filterByColumn('achieved', 'equal', true);
+      } else {
+        this.$refs.grid.ej2Instances.clearFiltering();
       }
     }
   }
