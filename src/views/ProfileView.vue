@@ -3,10 +3,21 @@
   <div class="p-6">
     <Breadcrumbs :items="breadcrumbs" />
     <ContentBoxWrapper
-      :title="title"
       :description="description"
     >
-      <p>ke ke ke</p>
+      <template v-slot:title>
+        <div class="flex items-center">
+          <h1 class="text-slate-500 font-bold leading-8">{{ title }}</h1>
+          <span
+            class="ml-3 py-2 px-3 font-bold text-xs rounded-md"
+            :class="{ 'bg-emerald-200 text-emerald-950': achieved, 'bg-slate-100 text-emerald-700': !achieved }"
+          >
+            {{ achieved ? 'Certified' : 'In progress' }}
+          </span>
+        </div>
+      </template>
+
+      {{ competences }}
     </ContentBoxWrapper>
   </div>
 </template>
@@ -28,7 +39,9 @@ export default {
         { text: "My training profiles", link: "/" },
       ],
       title: "",
-      description: ""
+      description: "",
+      achieved: false,
+      competences: []
     }
   },
   created() {
@@ -48,6 +61,8 @@ export default {
           this.breadcrumbs.push({ text: data.title, link: "/" })
           this.title = data.title
           this.description = data.description
+          this.achieved = data.achieved
+          this.competences = data.competences
         })
         .catch(error => {
           console.error("There was a problem with the fetch operation:", error)
