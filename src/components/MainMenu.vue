@@ -4,9 +4,7 @@
       <div class="flex justify-between items-center h-16">
         <div class="flex items-center">
           <RouterLink to="/">
-            <img
-              src="@/assets/svg/LogoProcademy.svg"
-            />
+            <img src="@/assets/svg/LogoProcademy.svg" />
           </RouterLink>
         </div>
         <div class="flex items-center justify-between">

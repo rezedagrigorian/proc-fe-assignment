@@ -118,7 +118,7 @@ export default {
     grid: [Filter]
   },
   mounted() {
-    let API_URL = "https://proc-front-dev-task.wiremockapi.cloud/training_profiles"
+    const API_URL = "https://proc-front-dev-task.wiremockapi.cloud/training_profiles"
     this.gridData = new DataManager({
       url: API_URL,
       adaptor: new ODataAdaptor(),
@@ -128,6 +128,7 @@ export default {
   },
   watch: {
     achievedFilterValue:function(val) {
+      console.log('zxzx')
       if (val !== null) {
         this.$refs.grid.ej2Instances.filterByColumn("achieved", "equal", val)
       } else {

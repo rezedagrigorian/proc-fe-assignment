@@ -4,6 +4,7 @@
     <Breadcrumbs :items="breadcrumbs" />
     <ContentBoxWrapper
       :description="description"
+      :additionalContentClass="'max-w-5xl'"
     >
       <template v-slot:title>
         <div class="flex items-center">
@@ -16,8 +17,19 @@
           </span>
         </div>
       </template>
-
-      {{ competences }}
+      <div class="my-5 flex justify-end">
+        <MagicToggle v-model="showGrid" :options="showGridOptions" />
+      </div>
+      <div :class="{ 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3': showGrid }">
+        <CompetenceCard
+          v-for="(card, index) in competences"
+          :key="index"
+          :title="card.title"
+          :required="card.required"
+          :achieved="card.achieved"
+          :grid="showGrid"
+        />
+      </div>
     </ContentBoxWrapper>
   </div>
 </template>
@@ -26,12 +38,16 @@
 import MainMenu from "@/components/MainMenu.vue"
 import Breadcrumbs from "../components/Breadcrumbs.vue"
 import ContentBoxWrapper from "../components/ContentBoxWrapper.vue"
+import MagicToggle from '../components/MagicToggle.vue'
+import CompetenceCard from "../components/CompetenceCard.vue"
 
 export default {
   components: {
     MainMenu,
     Breadcrumbs,
     ContentBoxWrapper,
+    MagicToggle,
+    CompetenceCard
   },
   data() {
     return {
@@ -41,7 +57,12 @@ export default {
       title: "",
       description: "",
       achieved: false,
-      competences: []
+      competences: [],
+      showGrid: false,
+      showGridOptions: [
+        { title: "List", value: false },
+        { title: "Grid", value: true }
+      ]
     }
   },
   created() {
