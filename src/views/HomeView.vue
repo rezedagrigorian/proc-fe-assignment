@@ -6,7 +6,11 @@
       title="My training profiles"
       description="Overview of required training profiles"
     >
-      <div class="lovely-grid">
+      <ErrorMessage
+        title="There was a problem with connection to server, please try again later"
+        v-if="networkError"
+      />
+      <div v-else class="lovely-grid">
         <GridComponent
           ref="grid"
           :dataSource="gridData"
@@ -83,6 +87,7 @@
   import Breadcrumbs from "../components/Breadcrumbs.vue"
   import MagicToggle from "../components/MagicToggle.vue"
   import ContentBoxWrapper from "../components/ContentBoxWrapper.vue"
+  import ErrorMessage from "../components/ErrorMessage.vue"
 
   export default {
     components: {
@@ -92,7 +97,8 @@
       ContentBoxWrapper,
       GridComponent,
       ColumnsDirective,
-      ColumnDirective
+      ColumnDirective,
+      ErrorMessage
     },
     data() {
       return {
@@ -105,7 +111,8 @@
           { title: "Yes", value: true },
           { title: "No", value: false },
           { title: "Clear", value: null }
-        ]
+        ],
+        networkError: false
       }
     },
     methods: {
@@ -123,6 +130,9 @@
         adaptor: new ODataAdaptor(),
         crossDomain: true
       })
+
+      // catch DataManager http error
+
       this.gridInstance = this.$refs.grid.ej2Instances
     },
     watch: {

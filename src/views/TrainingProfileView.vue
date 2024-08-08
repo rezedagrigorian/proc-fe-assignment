@@ -2,7 +2,12 @@
   <MainMenu />
   <div class="p-6">
     <Breadcrumbs :items="breadcrumbs" />
+    <ErrorMessage
+      title="There was a problem fetching training profile, please try again later"
+      v-if="networkError"
+    />
     <ContentBoxWrapper
+    v-else
       :description="description"
       :additionalContentClass="'max-w-5xl'"
     >
@@ -40,6 +45,7 @@
   import ContentBoxWrapper from "../components/ContentBoxWrapper.vue"
   import MagicToggle from '../components/MagicToggle.vue'
   import CompetenceCard from "../components/CompetenceCard.vue"
+  import ErrorMessage from "../components/ErrorMessage.vue"
 
   export default {
     components: {
@@ -47,7 +53,8 @@
       Breadcrumbs,
       ContentBoxWrapper,
       MagicToggle,
-      CompetenceCard
+      CompetenceCard,
+      ErrorMessage
     },
     data() {
       return {
@@ -62,7 +69,8 @@
         showGridOptions: [
           { title: "List", value: false },
           { title: "Grid", value: true }
-        ]
+        ],
+        networkError: false
       }
     },
     created() {
@@ -85,8 +93,8 @@
             this.achieved = data.achieved
             this.competences = data.competences
           })
-          .catch(error => {
-            console.error("There was a problem with the fetch operation:", error)
+          .catch(() => {
+            this.networkError = true
           })
       },
     },
