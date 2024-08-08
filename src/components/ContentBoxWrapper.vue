@@ -16,21 +16,21 @@
 </template>
 
 <script>
-export default {
-  name: 'ContentBoxWrapper',
-  props: {
-    title: {
-      type: String,
-      default: ''
-    },
-    description: {
-      type: String,
-      default: ''
-    },
-    additionalContentClass: {
-      type: String,
-      default: ''     
+  export default {
+    name: 'ContentBoxWrapper',
+    props: {
+      title: {
+        type: String,
+        default: ''
+      },
+      description: {
+        type: String,
+        default: ''
+      },
+      additionalContentClass: {
+        type: String,
+        default: ''     
+      }
     }
-  }
-};
+  };
 </script>

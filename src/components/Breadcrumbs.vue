@@ -1,8 +1,6 @@
 <template>
-  <div class="flex flex-row items-center flex-wrap mb-6">
-    <div class="breadcrumb-item">
-      <i class="icons8-home text-slate-500 text-2xl" />
-    </div>
+  <div class="flex flex-row flex-wrap items-center mb-6">
+    <i class="icons8-home text-slate-500 text-2xl" />
     <div
       v-for="(crumb, index) in items"
       :key="index"
@@ -30,7 +28,7 @@
 </script>
   
 <style scoped>
-  .breadcrumb-item + .breadcrumb-item::before {
+  .breadcrumb-item::before {
     content: "/";
     padding: 0 1rem;
   }

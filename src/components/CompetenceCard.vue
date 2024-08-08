@@ -68,9 +68,4 @@ export default {
 .progress-bar-counter {
   min-width: 70px;
 }
-
-p {
-  margin: 0;
-  text-align: center;
-}
 </style>

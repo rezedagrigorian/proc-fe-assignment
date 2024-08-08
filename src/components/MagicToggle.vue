@@ -15,42 +15,42 @@
 </template>
 
 <script>
-export default {
-  name: 'MagicToggle',
-  props: {
-    options: {
-      type: Array,
-      required: true,
-      validator(value) {
-        return value.every(opt => 'title' in opt && 'value' in opt);
-      }
-    },
-    modelValue: {
-      type: [String, Number, Boolean],
-      required: true
-    }
-  },
-  computed: {
-    selectedValue: {
-      get() {
-        return this.modelValue;
+  export default {
+    name: 'MagicToggle',
+    props: {
+      options: {
+        type: Array,
+        required: true,
+        validator(value) {
+          return value.every(opt => 'title' in opt && 'value' in opt);
+        }
       },
-      set(value) {
-        this.$emit('update:modelValue', value);
+      modelValue: {
+        type: [String, Number, Boolean],
+        required: true
       }
-    }
-  },
-  methods: {
-    isSelected(value) {
-      return this.selectedValue === value;
     },
-    selectOption(value) {
-      if (value !== this.selectedValue) {
-        this.selectedValue = value;
+    computed: {
+      selectedValue: {
+        get() {
+          return this.modelValue;
+        },
+        set(value) {
+          this.$emit('update:modelValue', value);
+        }
+      }
+    },
+    methods: {
+      isSelected(value) {
+        return this.selectedValue === value;
+      },
+      selectOption(value) {
+        if (value !== this.selectedValue) {
+          this.selectedValue = value;
+        }
       }
     }
-  }
-};
+  };
 </script>
 
 <style scoped>

@@ -17,8 +17,8 @@
               field="id"
               :headerTemplate="'headerTemplate'"
               textAlign="Right"
-              width="100"
               :allowFiltering="false"
+              width="100"
             />
             <ColumnDirective
               field="title"
@@ -71,72 +71,71 @@
 </template>
 
 <script>
-import {
-  GridComponent,
-  ColumnsDirective,
-  ColumnDirective,
-  Filter
-} from "@syncfusion/ej2-vue-grids"
-import { DataManager, ODataAdaptor } from "@syncfusion/ej2-data"
-
-import MainMenu from "@/components/MainMenu.vue"
-import Breadcrumbs from "../components/Breadcrumbs.vue"
-import MagicToggle from "../components/MagicToggle.vue"
-import ContentBoxWrapper from "../components/ContentBoxWrapper.vue"
-
-export default {
-  components: {
-    MainMenu,
-    Breadcrumbs,
-    MagicToggle,
-    ContentBoxWrapper,
+  import {
     GridComponent,
     ColumnsDirective,
-    ColumnDirective
-  },
-  data() {
-    return {
-      breadcrumbs: [
-        { text: "My training profiles", link: "/" },
-      ],
-      gridData: [],
-      achievedFilterValue: null,
-      achievedFilterOptions: [
-        { title: "Yes", value: true },
-        { title: "No", value: false },
-        { title: "Clear", value: null }
-      ]
-    }
-  },
-  methods: {
-    achievementClass(isAchieved) {
-      const color = isAchieved ? "emerald" : "red"
-      return `p-2 rounded-full bg-${color}-50 text-${color}-700 text-xs`
-    }
-  },
-  provide: {
-    grid: [Filter]
-  },
-  mounted() {
-    const API_URL = "https://proc-front-dev-task.wiremockapi.cloud/training_profiles"
-    this.gridData = new DataManager({
-      url: API_URL,
-      adaptor: new ODataAdaptor(),
-      crossDomain: true
-    })
-    this.gridInstance = this.$refs.grid.ej2Instances
-  },
-  watch: {
-    achievedFilterValue:function(val) {
-      console.log('zxzx')
-      if (val !== null) {
-        this.$refs.grid.ej2Instances.filterByColumn("achieved", "equal", val)
-      } else {
-        this.$refs.grid.ej2Instances.clearFiltering()
+    ColumnDirective,
+    Filter
+  } from "@syncfusion/ej2-vue-grids"
+  import { DataManager, ODataAdaptor } from "@syncfusion/ej2-data"
+
+  import MainMenu from "@/components/MainMenu.vue"
+  import Breadcrumbs from "../components/Breadcrumbs.vue"
+  import MagicToggle from "../components/MagicToggle.vue"
+  import ContentBoxWrapper from "../components/ContentBoxWrapper.vue"
+
+  export default {
+    components: {
+      MainMenu,
+      Breadcrumbs,
+      MagicToggle,
+      ContentBoxWrapper,
+      GridComponent,
+      ColumnsDirective,
+      ColumnDirective
+    },
+    data() {
+      return {
+        breadcrumbs: [
+          { text: "My training profiles", link: "/" },
+        ],
+        gridData: [],
+        achievedFilterValue: null,
+        achievedFilterOptions: [
+          { title: "Yes", value: true },
+          { title: "No", value: false },
+          { title: "Clear", value: null }
+        ]
+      }
+    },
+    methods: {
+      achievementClass(isAchieved) {
+        const color = isAchieved ? "emerald" : "red"
+        return `p-2 rounded-full bg-${color}-50 text-${color}-700 text-xs`
+      }
+    },
+    provide: {
+      grid: [Filter]
+    },
+    mounted() {
+      const API_URL = "https://proc-front-dev-task.wiremockapi.cloud/training_profiles"
+      this.gridData = new DataManager({
+        url: API_URL,
+        adaptor: new ODataAdaptor(),
+        crossDomain: true
+      })
+      this.gridInstance = this.$refs.grid.ej2Instances
+    },
+    watch: {
+      achievedFilterValue:function(val) {
+        if (val !== null) {
+          this.$refs.grid.ej2Instances.filterByColumn("achieved", "equal", val)
+        } else {
+          this.$refs.grid.ej2Instances.clearFiltering()
+        }
       }
     }
   }
-}
 </script>
 
 <style>
