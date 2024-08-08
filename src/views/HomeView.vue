@@ -118,9 +118,8 @@
       grid: [Filter]
     },
     mounted() {
-      const API_URL = "https://proc-front-dev-task.wiremockapi.cloud/training_profiles"
       this.gridData = new DataManager({
-        url: API_URL,
+        url: process.env.VUE_APP_PROFILES_API_URL,
         adaptor: new ODataAdaptor(),
         crossDomain: true
       })

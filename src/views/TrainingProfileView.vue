@@ -71,7 +71,7 @@
     methods: {
       fetchData() {
         const { id } = this.$route.params;
-        fetch(`https://proc-front-dev-task.wiremockapi.cloud/training_profile/${id}`)
+        fetch(`${process.env.VUE_APP_PROFILE_API_URL}/${id}`)
           .then(response => {
             if (!response.ok) {
               throw new Error("Network response was not ok")
