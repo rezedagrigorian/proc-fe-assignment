@@ -11,64 +11,66 @@
         v-if="networkError"
       />
       <div v-else class="lovely-grid">
-        <GridComponent
-          ref="grid"
-          :dataSource="gridData"
-          :allowFiltering="true"
-        >
-          <ColumnsDirective>
-            <ColumnDirective
-              field="id"
-              :headerTemplate="'headerTemplate'"
-              textAlign="Right"
-              :allowFiltering="false"
-              width="100"
-            />
-            <ColumnDirective
-              field="title"
-              :headerTemplate="'headerTemplate'"
-              :allowFiltering="false"
-            />
-            <ColumnDirective
-              field="achieved"
-              :headerTemplate="'headerTemplate'"
-              :template="'achievementTemplate'"
-              :filterTemplate="'statusFilterTemplate'"
-            />
-            <ColumnDirective
-              field="action"
-              :headerTemplate="'headerTemplate'"
-              :template="'actionTemplate'"
-              filterTemplate="</>"
-            />
-          </ColumnsDirective>
+        <div class="lovely-scroller">
+          <GridComponent
+            ref="grid"
+            :dataSource="gridData"
+            :allowFiltering="true"
+          >
+            <ColumnsDirective>
+              <ColumnDirective
+                field="id"
+                :headerTemplate="'headerTemplate'"
+                textAlign="Right"
+                :allowFiltering="false"
+                width="100"
+              />
+              <ColumnDirective
+                field="title"
+                :headerTemplate="'headerTemplate'"
+                :allowFiltering="false"
+              />
+              <ColumnDirective
+                field="achieved"
+                :headerTemplate="'headerTemplate'"
+                :template="'achievementTemplate'"
+                :filterTemplate="'statusFilterTemplate'"
+              />
+              <ColumnDirective
+                field="action"
+                :headerTemplate="'headerTemplate'"
+                :template="'actionTemplate'"
+                filterTemplate="</>"
+              />
+            </ColumnsDirective>
 
-          <template v-slot:achievementTemplate="{ data }">
-            <span :class="achievementClass(data.achieved)">
-              {{ data.achieved ? "Achieved" : "Failed" }}
-            </span>
-          </template>
+            <template v-slot:achievementTemplate="{ data }">
+              <span :class="achievementClass(data.achieved)">
+                {{ data.achieved ? "Achieved" : "Failed" }}
+              </span>
+            </template>
 
-          <template v-slot:actionTemplate="{ data }">
-            <RouterLink :to="`/training_profile/${data.id}`">
-              <i class="icons8-eye text-slate-500 text-2xl mr-3" />
-            </RouterLink>
-          </template>
+            <template v-slot:actionTemplate="{ data }">
+              <RouterLink :to="`/training_profile/${data.id}`">
+                <i class="icons8-eye text-slate-500 text-base mr-3" />
+              </RouterLink>
+            </template>
 
-          <template #statusFilterTemplate>
-            <MagicToggle v-model="achievedFilterValue" :options="achievedFilterOptions" />
-          </template>
+            <template #statusFilterTemplate>
+              <MagicToggle v-model="achievedFilterValue" :options="achievedFilterOptions" />
+            </template>
 
-          <template v-slot:headerTemplate="{ data }">
-            <div
-              class="text-slate-800 font-bold text-sm flex items-center h-full"
-              :class="{ 'header-cell': data.index != 0, 'header-first-cell': data.index == 0 }"
-            >
-              {{ data.field }}
-              <i v-if="data.index == 0" class="icons8-right-arrow rotate-90 text-blue-500 text-xl ml-1" />
-            </div>
-          </template>
-        </GridComponent>
+            <template v-slot:headerTemplate="{ data }">
+              <div
+                class="text-slate-800 font-bold text-sm flex items-center h-full"
+                :class="{ 'header-cell': data.index != 0, 'header-first-cell': data.index == 0 }"
+              >
+                {{ data.field }}
+                <i v-if="data.index == 0" class="icons8-right-arrow rotate-90 text-blue-500 text-xl ml-1" />
+              </div>
+            </template>
+          </GridComponent>
+        </div>
       </div>
     </ContentBoxWrapper>
   </div>
@@ -106,11 +108,11 @@
           { text: "My training profiles", link: "/" },
         ],
         gridData: [],
-        achievedFilterValue: null,
+        achievedFilterValue: "clear",
         achievedFilterOptions: [
           { title: "Yes", value: true },
           { title: "No", value: false },
-          { title: "Clear", value: null }
+          { title: "Clear", value: "clear" },
         ],
         networkError: false
       }
@@ -118,7 +120,7 @@
     methods: {
       achievementClass(isAchieved) {
         const color = isAchieved ? "emerald" : "red"
-        return `p-2 rounded-full bg-${color}-50 text-${color}-700 text-xs`
+        return `py-[4px] px-[8px] rounded-full bg-${color}-50 text-${color}-700 text-sm font-medium`
       }
     },
     provide: {
@@ -137,10 +139,10 @@
     },
     watch: {
       achievedFilterValue:function(val) {
-        if (val !== null) {
-          this.$refs.grid.ej2Instances.filterByColumn("achieved", "equal", val)
+        if (val !== "clear") {
+          this.gridInstance.filterByColumn("achieved", "equal", val)
         } else {
-          this.$refs.grid.ej2Instances.clearFiltering()
+          this.gridInstance.clearFiltering()
         }
       }
     }
@@ -152,6 +154,14 @@
     border-radius: 8px;
     border: 1px solid theme(colors.slate.200);
     overflow: hidden;
+    min-width: 700px;
+    
+  }
+
+  @media screen and (max-width: 790px) {
+    .lovely-grid .e-grid {
+      margin-bottom: 10px;
+    }
   }
 
   .lovely-grid .e-gridheader {
@@ -159,14 +169,48 @@
   }
 
   .lovely-grid .e-row, .lovely-grid .e-filterbar, .lovely-grid .e-columnheader {
+    font-family: Inter, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
     height: 75px;
   }
 
   .lovely-grid .header-cell {
+    color: theme(colors.slate.800);
     text-transform: capitalize;
   }
 
   .lovely-grid .header-first-cell {
+    color: theme(colors.slate.800);
     text-transform: uppercase;
+  }
+
+  .lovely-grid .e-grid .e-rowcell:not(.e-editedbatchcell):not(.e-updatedtd) {
+    color: theme(colors.slate.500);
+  }
+
+  .lovely-grid .lovely-scroller {
+    overflow-x: auto;
+  }
+</style>
+
+<style scoped>
+  ::-webkit-scrollbar {
+    height: 4px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: theme(colors.slate.100);
+    border-radius: 5px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: theme(colors.slate.400);
+    border-radius: 5px;
+  }
+ 
+  ::-webkit-scrollbar-thumb:hover {
+    background: theme(colors.slate.600);
   }
 </style>

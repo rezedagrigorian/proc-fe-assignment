@@ -2,7 +2,7 @@
   <div class="flex">
     <div class="inline-flex rounded-xl overflow-hidden cursor-pointer">
       <div 
-        v-for="option in options" 
+        v-for="option in options"
         :key="option.value" 
         class="bg-slate-50 text-slate-800 hover:bg-slate-100 px-3 py-1 text-sm font-medium transition-all" 
         :class="{ active: isSelected(option.value) }"
@@ -48,8 +48,8 @@
         if (value !== this.selectedValue) {
           this.selectedValue = value;
         }
-      }
-    }
+      },
+    },
   };
 </script>
 

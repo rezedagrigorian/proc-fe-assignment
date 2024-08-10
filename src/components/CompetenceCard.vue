@@ -15,10 +15,11 @@
         class="flex items-center w-full max-w-lg mt-1"
         :class="{'md:ml-3 md:mt-0': !grid}"
       >
-        <div class="flex-grow bg-slate-100 h-2 rounded-lg overflow-hidden">
+        <!-- progress bar -->
+        <div class="flex-grow bg-slate-100 h-2 rounded-lg overflow-hidden mr-5">
           <div
             class="bg-emerald-500 h-full"
-            :style="{ width: progressPercentage + '%' }"
+            :style="{ width: progressPercentage + '%'}"
           />
         </div>
         <div class="progress-bar-counter text-slate-800 text-sm text-right font-semibold">
@@ -53,7 +54,7 @@ export default {
   computed: {
     progressPercentage() {
       return (this.achieved / this.required) * 100;
-    }
+    },    
   }
 }
 </script>

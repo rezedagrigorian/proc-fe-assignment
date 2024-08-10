@@ -8,8 +8,10 @@
           </RouterLink>
         </div>
         <div class="flex items-center justify-between">
-          <i class="icons8-envelope text-slate-500 text-2xl mr-3" />
-          <i class="icons8-notification text-slate-500 text-2xl mr-6 relative notification-marker" />
+          <i class="icons8-envelope text-slate-500 text-2xl mr-4" />
+          <div class="mr-6 relative notification-marker">
+            <img src="@/assets/svg/notification-bell.svg" />
+          </div>
           <AvatarIcon initials="RG" />
           <i class="icons8-expand-arrow text-[#64748B] text-xl" />
         </div>
